@@ -19,7 +19,7 @@ what each method is doing.
 
 Notice that there are behaviors that are shared between both of these classes.
 For example, both classes have `.count` and `reset_all` class methods.
-Consequently, both classes have *the same exact code*. As programmers, you may
+Consequently, both classes have _the same exact code_. As programmers, you may
 recall, we are lazy. We don't like to repeat ourselves. We like to keep it DRY
 (Don't Repeat Yourself). In this lab, we'll be identifying repetition and
 building modules to extract it out. Then, we'll use the `extend` and `include`
@@ -30,14 +30,15 @@ classes.
 
 Instead of requiring individual files within one another, as you may have
 noticed we did in the previous two code along exercises, we created an
-environment file to handle those requirements for us. Open up the `config`
-directory and look at the `environment.rb` file. You'll see that we're already
-requiring the files that hold our `Artist` and `Song` class. Any additional
-files we make should be required by this `environment.rb` file. Our
-`spec_helper` file, which is required by each individual spec file, required
-*only this `config/environment.rb` file*, instead of each and every file from
-the `lib` directory. As we start to build larger and more complex programs, it
-begins to make sense to handle all of our requirements in one place.
+environment file to handle those requirements for us. Because the
+`environment.rb` file is read and loaded into memory in line order, if `Artist`
+requires `Memorable`, then Artist must be required **after** requiring
+`Memorable`. `Memorable` must be loaded first, so that as Ruby when loads
+`Artist`, `Memorable::ClassInstances` is already defined. Our `spec_helper`
+file, which is required by each individual spec file, required _only this
+`config/environment.rb` file_, instead of each and every file from the `lib`
+directory. As we start to build larger and more complex programs, it begins to
+make sense to handle all of our requirements in one place.
 
 ## Instructions
 
@@ -45,16 +46,16 @@ begins to make sense to handle all of our requirements in one place.
 
 We use TDD (test-driven development) for a reason. We write tests to define the
 desired behavior of our program so that we can write clean, beautiful code.
-Such code usually *isn't* the code you write the first time around. The code
-you first write is the code that makes your program *work*, the code that gets
+Such code usually _isn't_ the code you write the first time around. The code
+you first write is the code that makes your program _work_, the code that gets
 those tests passing. Then, we refactor our code to make it clean, DRY, and easy
 to understand. This is where our tests come in. We write thorough tests that
-cover all of the aspects of our code's desired behavior. We can *first* write
-code that passes those tests and *then* break our code, fail our tests, write
+cover all of the aspects of our code's desired behavior. We can _first_ write
+code that passes those tests and _then_ break our code, fail our tests, write
 better code and pass our tests again.
 
 This is called the **red, green, refactor** pattern. First tests fail, then you
-write bad code to get them to pass, *then* you refactor that bad code into good
+write bad code to get them to pass, _then_ you refactor that bad code into good
 code. In this lab, you'll start by running the test suite. You'll see that all
 of the tests pass. Then, we'll break that code in order to refactor it, write
 better code and get our tests passing again. Remember, don't be afraid of
@@ -69,7 +70,7 @@ go of those passing tests because we are about to break our code.
 The first area of refactoring we'll be attacking are the class methods. Notice
 that both the `Song` and `Artist` class have `.count` and `reset_all` class
 methods. Instead of repeating the same exact code in both classes, let's
-extract these class methods into a module that we can *extend* into the
+extract these class methods into a module that we can _extend_ into the
 classes.
 
 Ready to break your code? Comment out the `reset_all` and `count` methods in
@@ -85,7 +86,6 @@ oriented Ruby project.
 
 Inside the `concerns` folder, create a file called `memorable.rb`. Open up that
 file and define a module:
-
 
 ```ruby
 module Memorable
@@ -127,7 +127,7 @@ it. We'll call this app "Nile" (definitely not inspired by another online
 market-place named after a famous river). Such an application needs to store
 the items it has for sale as well as the information of the user who logs in to
 go shopping. Consequently, every time a user logs in, or searches for an item,
-or purchases an item, we have to *retrieve information from a database*. One of
+or purchases an item, we have to _retrieve information from a database_. One of
 the most common ways you'll be doing that is to use methods like `find_by_name`
 or `find_by_email` or `find_by_product_id` or...you get the idea. We'll be
 learning much, much more about this later. Here, we're building a simple
@@ -177,12 +177,11 @@ end
 
 Inside the `Findable.find_by_name` method, we can't use a class-specific class
 variable like `@@artists`, because our method would break when included in any
-class that *didn't* define such a variable.
+class that _didn't_ define such a variable.
 
-Is there a way to reference the collection of *all* of the instances of a
+Is there a way to reference the collection of _all_ of the instances of a
 class, without specifically referencing class variables that are only defined
 in certain classes?
-
 
 ### Step 2: Instance Methods
 
@@ -214,7 +213,6 @@ method from the `Song` and `Artist` classes.
 Important! Remember to add `require_relative '../lib/concerns/paramable'` to
 your environment file before running any tests. We've already provided that
 line for you in fact! All you have to do is un-comment it out. :)
-
 
 #### Advanced: The `to_param` Method
 
@@ -267,7 +265,6 @@ In `song.rb` we have:
 In `artist.rb` we have:
 
 `@@artists << self`
-
 
 This is pretty similar, although not exactly the same. However, it is
 repetitious enough to be giving off a code smell. In order to refactor it,
@@ -327,8 +324,8 @@ or
 
 `Song.all`
 
-So, to call the `.all` class method from *inside the `.initialize` instance
-method*, we can call `self.class` inside `.initialize`.
+So, to call the `.all` class method from _inside the `.initialize` instance
+method_, we can call `self.class` inside `.initialize`.
 
 Take a quick look at this reminder of how `.class` works:
 
@@ -443,9 +440,9 @@ class Artist
   end
 ```
 
-In the `Artist` class, the initialize method is *also* responsible for setting
+In the `Artist` class, the initialize method is _also_ responsible for setting
 the `@songs` instance variable equal to an empty array. We need to hang on to
-this behavior, even as `Artist` instances grab the *rest* of the `.initialize`
+this behavior, even as `Artist` instances grab the _rest_ of the `.initialize`
 from the `Memorable::InstanceMethods` module.
 
 Remember our `super` keyword from the inheritance code along exercise? The
@@ -456,11 +453,11 @@ inside the super class' method of the same name, and then execute any code
 inside the child class' method.
 
 When we `include` a module in a class, we are really telling that class to
-*inherit* methods from that module.
+_inherit_ methods from that module.
 
 So, we can use the `super` keyword to tell our `Artist`'s `.initialize` method
 to use the code in the `Memorable::InstanceMethods` module's `.initialize`
-method *and* also to use any additional code in the `Artist`'s `.initialize`
+method _and_ also to use any additional code in the `Artist`'s `.initialize`
 method. Take a look:
 
 ```ruby
