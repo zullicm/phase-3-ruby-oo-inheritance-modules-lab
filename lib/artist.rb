@@ -1,20 +1,26 @@
+
 class Artist
   attr_accessor :name
   attr_reader :songs
 
   extend Memorable::ClassMethods
   extend Findable::ClassMethods
-  prepend Memorable::InstanceMethods
+  include Memorable::InstanceMethods
   include Paramable::InstanceMethods
 
   @@artists = []
-  
-  def self.all
-    @@artists
-  end
 
   def initialize
+    @@artists << self
     @songs = []
+  end
+
+  def self.find_by_name(name)
+    @@artists.detect{|a| a.name == name}
+  end
+
+  def self.all
+    @@artists
   end
 
   def add_song(song)
