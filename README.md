@@ -479,4 +479,4 @@ them, even if you can't follow everything they discuss. It's important to plant
 the seed of some of these more complex topics––it will make them easier to
 understand later on when you're ready to go deeper into Ruby programming.
 
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/artist-song-modules' title='Refactoring with Modules'>Refactoring with Modules</a> on Learn.co and start learning to code for free.</p>
+
