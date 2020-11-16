@@ -1,4 +1,4 @@
-# Refactoring with Modules
+# Modules Lab
 
 ## Objectives
 
