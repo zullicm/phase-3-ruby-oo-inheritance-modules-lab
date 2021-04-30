@@ -1,11 +1,11 @@
 # Modules Lab
 
-## Objectives
+## Learning Goals
 
-1. Recognize "code smells" that indicate the need for refactoring.
-2. Use modules to refactor away repetitious code.
+- Recognize "code smells" that indicate the need for refactoring.
+- Use modules to refactor away repetitious code.
 
-## Overview
+## Introduction
 
 In this lab, we have an `Artist` class and a `Song` class. `Artist`s have many
 songs and an individual instance of the `Song` class belongs to an artist.
@@ -478,5 +478,3 @@ that we threw in there to challenge you and make you think. Don't skip over
 them, even if you can't follow everything they discuss. It's important to plant
 the seed of some of these more complex topics––it will make them easier to
 understand later on when you're ready to go deeper into Ruby programming.
-
-
